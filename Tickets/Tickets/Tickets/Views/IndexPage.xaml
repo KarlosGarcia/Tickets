@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             BindingContext="{Binding Main, Source={StaticResource Locator}}"
+             BackgroundColor="White"
+             x:Class="Tickets.Views.IndexPage"
+             Title="Tus Entradas">
+    <ContentPage.Content>
+        <StackLayout
+         VerticalOptions="Center"
+         Padding="20"
+         BackgroundColor="White"
+         BindingContext="{Binding Login}">
+            <StackLayout>
+                <Image Source="tickets.png"/>
+                <Grid Margin="1">
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="30"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <StackLayout 
+                            Orientation="Horizontal">
+                            <Image Source="email.png"/>
+                        </StackLayout>
+                        <Entry
+                            Grid.Column="1"
+                            TextColor="Black"
+                            FontSize="Large"
+                            VerticalOptions="Center"
+                            HorizontalOptions="FillAndExpand"
+                            Placeholder="email"
+                            Keyboard="Email"
+                            Text="{Binding Email, Mode=TwoWay}">
+                        </Entry>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="30"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <StackLayout 
+                            Orientation="Horizontal">
+                            <Image Source="user.png"/>
+                        </StackLayout>
+                        <Entry
+                            Grid.Column="1"
+                            TextColor="Black"
+                            VerticalOptions="Center"
+                            HorizontalOptions="FillAndExpand"
+                            Placeholder="contraseña"
+                            Text="{Binding Password, Mode=TwoWay}"
+                            Keyboard="Text"
+                            IsPassword="True">  
+                        </Entry>
+                    </Grid>
+                </Grid>
+                <StackLayout>
+                    <ActivityIndicator
+                        IsRunning="{Binding IsRunning}">
+                    </ActivityIndicator>
+                    <Button
+                        Command="{Binding LoginCommand}"
+                        BackgroundColor="Gray"
+                        TextColor="White"
+                        HeightRequest="40"
+                        BorderRadius="20"
+                        Text="Ingresar">
+                    </Button>
+                </StackLayout>
+            </StackLayout>
+         </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
