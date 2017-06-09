@@ -25,10 +25,6 @@ namespace Tickets.ViewModels
         }
         #endregion
 
-        #region Eventos
-        public event PropertyChangedEventHandler PropertyChanged;
-        #endregion
-
         #region Singleton
         private static MainViewModel instance;
 

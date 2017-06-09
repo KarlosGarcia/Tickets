@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Windows.Input;
 using Tickets.Models;
 using Tickets.Services;
+using Xamarin.Forms;
 
 namespace Tickets.ViewModels
 {
@@ -14,11 +15,60 @@ namespace Tickets.ViewModels
         private NavigationService navigationService;
         private bool isRunning;
         private bool isEnabled;
+        private string statusTicket;
+        private string ticketCode;
+        private Color statusColor;
         #endregion
 
         #region Propiedades
 
-        public string TicketCode { get; set; }
+        public Color StatusColor
+        {
+            set
+            {
+                if (statusColor != value)
+                {
+                    statusColor = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("StatusColor"));
+                }
+            }
+            get
+            {
+                return statusColor;
+            }
+        }
+
+        public string StatusTicket
+        {
+            set
+            {
+                if (statusTicket != value)
+                {
+                    statusTicket = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("StatusTicket"));
+                }
+            }
+            get
+            {
+                return statusTicket;
+            }
+        }
+
+        public string TicketCode
+        {
+            set
+            {
+                if (ticketCode != value)
+                {
+                    ticketCode = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("TicketCode"));
+                }
+            }
+            get
+            {
+                return ticketCode;
+            }
+        }
 
         public bool IsRunning
         {
@@ -79,7 +129,8 @@ namespace Tickets.ViewModels
         {
             if (string.IsNullOrEmpty(TicketCode))
             {
-                await dialogService.ShowMessage("Importante", "Ingresa Tu Codigo De Entrada!");
+                await dialogService.ShowMessage("Importante", "Ingresa Tu Codigo De Boleto!");
+                StatusTicket = "";
                 return;
             }
 
@@ -88,16 +139,8 @@ namespace Tickets.ViewModels
             IsEnabled = false;
             string controlador = string.Format("{0}{1}","/Tickets/",TicketCode);
             var response = await apiService.GetTicket<Ticket>("http://checkticketsback.azurewebsites.net", "/api", controlador);
-            Ticket dataTicket = (Ticket)response.Result;
             if (!response.IsSuccess)
             {
-                var answer = await dialogService.ShowConfirm("Importante", response.Message);
-                if (!answer)
-                {
-                    IsRunning = false;
-                    IsEnabled = true;
-                    return;
-                }
                 // Realizamos el llamado al Servicio REST para Registrar La Entrada
                 controlador = string.Format("{0}", "/Tickets");
                 Ticket ticket = new Ticket();
@@ -105,29 +148,38 @@ namespace Tickets.ViewModels
                 ticket.DateTime = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                 ticket.UserId = this.UserId;
                 response = await apiService.AddTicket("http://checkticketsback.azurewebsites.net", "/api", controlador, ticket);
-                if (!response.IsSuccess)
+                // Si Lo Pudo Crear
+                Ticket dataTicket = (Ticket)response.Result;
+                if (response.IsSuccess == false)
                 {
-                    await dialogService.ShowMessage("Importante", "Lo Siento, Entrada No Registrada!");
                     IsRunning = false;
                     IsEnabled = true;
+                    StatusTicket = response.Message;
+                    StatusTicket = StatusTicket.Replace("@@", TicketCode);
+                    TicketCode = "";
+                    StatusColor = Color.Red;
                     return;
                 }
-                await dialogService.ShowMessage("Importante", "Felicidades, Entrada Registrada Exitosamente!");
-                IsRunning = false;
-                IsEnabled = true;
-                TicketCode = "";
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("TicketCode"));
-                return;
+                else
+                {
+                    IsRunning = false;
+                    IsEnabled = true;
+                    StatusTicket = response.Message;
+                    StatusTicket = StatusTicket.Replace("@@", TicketCode);
+                    TicketCode = "";
+                    StatusColor = Color.Green;
+                }
             }
-            if (!string.IsNullOrEmpty(dataTicket.TicketCode))
+            else
             {
-                await dialogService.ShowMessage("Importante", "Tu Entrada Ya Se Encuentra Registrada!");
                 IsRunning = false;
                 IsEnabled = true;
+                StatusTicket = response.Message;
+                StatusTicket = StatusTicket.Replace("@@", TicketCode);
+                TicketCode = "";
+                StatusColor = Color.Red;
                 return;
             }
-            IsRunning = false;
-            IsEnabled = true;
         }
         #endregion
     }

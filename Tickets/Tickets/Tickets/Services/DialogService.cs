@@ -11,7 +11,7 @@ namespace Tickets.Services
 
         public async Task<bool> ShowConfirm(string title, string message)
         {
-            return await App.Current.MainPage.DisplayAlert(title, message, "Registar", "Salir");
+            return await App.Current.MainPage.DisplayAlert(title, message, "SI", "NO");
         }
     }
 }

@@ -62,6 +62,8 @@ namespace Tickets.ViewModels
             dialogService = new DialogService();
             apiService = new ApiService();
             IsEnabled = true;
+            Email = "carlosandresgr@gmail.com";
+            Password = "123456";
         }
         #endregion
 

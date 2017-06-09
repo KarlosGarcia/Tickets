@@ -218,7 +218,7 @@ namespace Tickets.Services
                     {
                         //TODO: Mejorar Mensaje
                         IsSuccess = false,
-                        Message = "Entrada No Registrada!",
+                        Message = "Boleto No Registrado!",
                     };
                 }
 
@@ -227,7 +227,7 @@ namespace Tickets.Services
                 return new Response
                 {
                     IsSuccess = true,
-                    Message = "Entrada Consultado De Manera Exitosa!",
+                    Message = "Boleto @@ Ya Se Encuentra Registrado!",
                     Result = newRecord,
                 };
             }
@@ -257,7 +257,8 @@ namespace Tickets.Services
                     return new Response
                     {
                         IsSuccess = false,
-                        Message = "Lo Sentimos, Entrada No Ha Sido Registrada!",
+                        Message = "Lo Sentimos, Boleto No Ha Sido Registrado!",
+                        Result = null,
                     };
                 }
 
@@ -267,7 +268,7 @@ namespace Tickets.Services
                 return new Response
                 {
                     IsSuccess = true,
-                    Message = "Felicitaciones, Entrada Registrada Exitosamente!",
+                    Message = "Felicitaciones, Boleto @@ Registrado Exitosamente!",
                     Result = newRecord,
                 };
             }

@@ -1,59 +1,59 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             BindingContext="{Binding Main, Source={StaticResource Locator}}"
-             BackgroundColor="White"
-             x:Class="Tickets.Views.ValidationPage"
-             Title="Valida Tu Entrada">
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 BindingContext="{Binding Main, Source={StaticResource Locator}}"
+                 BackgroundColor="White"
+                 x:Class="Tickets.Views.ValidationPage"
+                 Title="Valida Tu Boleto">
     <ContentPage.Content>
-        <StackLayout
-            Padding="15"
-            VerticalOptions="Center"
-            BackgroundColor="White"
-            BindingContext="{Binding Validate}">
-            <Label 
-                HorizontalOptions="Center"
-                Text="Bienvenido!"
-                FontSize="Large"/>
-            <Label 
-                HorizontalOptions="Center"
-                Text="{Binding FullName}"
-                FontSize="Large"/>
-            <Label></Label>
-            <Image Source="ticketsV.png"/>
-            <ActivityIndicator
-                IsRunning="{Binding IsRunning}">
-            </ActivityIndicator>
-        <StackLayout
-            Padding="0.5"
-            BackgroundColor="Gray"> 
-        <StackLayout
-            Padding="5"
-            BackgroundColor="White">
-            <Label 
-                Text="Valida Tus Entradas"
-                FontSize="Large"
-                HorizontalOptions="Center"/>
-            <Entry
-                FontSize="Large"
-                VerticalOptions="Center"
-                HorizontalOptions="FillAndExpand"
-                Placeholder="codigo de tu entrada"
-                Keyboard="Text"
-                Text="{Binding TicketCode, Mode=TwoWay}">
-            </Entry>
-            <Label
-                Text="{Binding StatusTicket, Mode=TwoWay}"/>
-            <Button
-                Command="{Binding ValidateCommand}"
-                BackgroundColor="Gray"
-                TextColor="White"
-                HeightRequest="40"
-                BorderRadius="20"
-                Text="Comprobar">
-            </Button>
-        </StackLayout>
-        </StackLayout>
-        </StackLayout>
+        <ScrollView>
+            <StackLayout
+                Padding="20, 80, 20, 20"
+                BackgroundColor="White"
+                BindingContext="{Binding Validate}">
+                <Label 
+                    HorizontalOptions="Center"
+                    Text="Bienvenido!"
+                    FontSize="Large"/>
+                <Label 
+                    HorizontalOptions="Center"
+                    Text="{Binding FullName}"
+                    FontSize="Large"/>
+                <Label></Label>
+                <Image Source="ticketsV.png"/>
+                <ActivityIndicator
+                    IsRunning="{Binding IsRunning}">
+                </ActivityIndicator>
+                <StackLayout
+                Padding="0.4"
+                BackgroundColor="Gray">
+                    <StackLayout
+                Padding="5"
+                BackgroundColor="White">
+                        <Entry
+                    FontSize="Large"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    Placeholder="codigo de tu boleto"
+                    Keyboard="Text"
+                    Text="{Binding TicketCode, Mode=TwoWay}">
+                        </Entry>
+                        <Label
+                    Text="{Binding StatusTicket, Mode=TwoWay}"
+                    FontSize="20"
+                    HorizontalOptions="Center"
+                    TextColor="{Binding StatusColor, Mode=TwoWay}"/>
+                        <Button
+                    Command="{Binding ValidateCommand}"
+                    BackgroundColor="Gray"
+                    TextColor="White"
+                    HeightRequest="40"
+                    BorderRadius="20"
+                    Text="Comprobar">
+                        </Button>
+                    </StackLayout>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>
