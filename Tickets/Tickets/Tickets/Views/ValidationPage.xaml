@@ -22,7 +22,8 @@
                 <Label></Label>
                 <Image Source="ticketsV.png"/>
                 <ActivityIndicator
-                    IsRunning="{Binding IsRunning}">
+                    IsRunning="{Binding IsRunning}"
+                    Color="Black">
                 </ActivityIndicator>
                 <StackLayout
                 Padding="0.4"
